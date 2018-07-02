@@ -12,12 +12,16 @@ Page({
    timeid:''
   },
   // onReady只会出现一次首页，使用onshow
-  onShow(){
-    if(!this.data.firstPage){
-      this.setData({firstPage:true,current:0});
-    }
-   this.slideshow();
-   this.canvasTrans();
+  /*onShow(){
+   if(!this.data.firstPage){
+     this.setData({ firstPage: true, current: 0 }); 
+   }
+    this.slideshow();
+    this.canvasTrans(); 
+  },*/
+  onReady(){
+    this.slideshow();
+    this.canvasTrans(); 
   },
   /*页面渐入渐出背景图片*/
   slideshow(){
@@ -33,7 +37,7 @@ Page({
       }
       that.setData({current:current});
     }
-   let timeid=setInterval(changeSlide,2500);
+   let timeid=setInterval(changeSlide,1800);
    this.setData({timeid:timeid});
   },
   canvasTrans(){
@@ -71,8 +75,8 @@ Page({
   circle(){
     let ctx=wx.createCanvasContext('fourthCanvas');
     let width =this.data.deviceWidth;
-    let startAngle = 0.9 * Math.PI;
-    let endAngle = 2.1 * Math.PI;
+    let startAngle = 0.95 * Math.PI;
+    let endAngle = 2.05 * Math.PI;
     // 每次的角度偏移量
     let xAngle=Math.PI/30;
     // 临时角度变量
@@ -88,11 +92,34 @@ Page({
         tmpAngle += xAngle;
       }
       ctx.setGlobalAlpha(0.3);
-      ctx.arc(width/2, 150, 100, startAngle, tmpAngle, false);
+      ctx.arc(width/2, 190, 120, startAngle, tmpAngle, false);
       ctx.setStrokeStyle('#ffffff');
-      ctx.setLineWidth(80);
+      ctx.setLineWidth(100);
       ctx.stroke();
       ctx.draw();
     }
+  },
+
+  /*点击拍摄按钮，进入拍摄页面 */
+  cameraFn(){
+    wx.navigateTo({
+      url:'../camera/camera'
+    });
+  },
+
+  /*上传视频*/
+  uploadFn(){
+    var that = this
+    wx.chooseVideo({
+      sourceType: ['album'],
+      maxDuration: 60,
+      camera: 'back',
+      success: function (res) {
+        that.setData({
+          src: res.tempFilePath
+        })
+      }
+    }) 
   }
+
 })

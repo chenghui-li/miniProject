@@ -1,12 +1,13 @@
 {
   "pages":[
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/camera/camera"
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor":"#000",
-    "navigationBarTitleText": "腾讯云智拍",
+    "navigationBarTitleText": "云智拍",
     "navigationBarTextStyle":"white"
   }
 }

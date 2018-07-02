@@ -1,0 +1,12 @@
+<camera device-position='back' flash="off" binderror="error" style="width: 100vw; height:100vh ;">
+  <cover-view id='bordercircle'>
+    <cover-view id='incircle'>
+    </cover-view>
+  </cover-view>
+  <!-- 查看历史记录 -->
+  <cover-view id='historybtn'>
+    查看历史记录
+  </cover-view>
+  <!-- border下边框 -->
+  <cover-view id='border'></cover-view>
+</camera>

@@ -99,12 +99,14 @@ font-size: 18px;
   padding-bottom: 6px;
   border-bottom: #30ffeb solid 2px;
 }
+
+/*探索页面相关样式*/
 #circleselect{
   position: absolute;
   bottom: 10%;
   left:0;
   width: 750rpx;
-  height:500rpx;
+  height:550rpx;
   opacity: 0;
 }
 .start_text{
@@ -122,4 +124,29 @@ font-size: 18px;
 }
 .show{
   opacity: 1;
+}
+
+/*探索页面圆弧上面的按钮*/
+.searchBtn{
+  opacity: 1;
+  transition: opacity linear 1s;
+  color:white;
+  text-align: center;
+  font-size: 10px;
+  z-index: 3;
+}
+.searchBtn image{
+   width:70rpx;
+   height:60rpx;
+   border-bottom: 2px;
+}
+.searchLeft{
+  position:absolute;
+  bottom:35%;
+  left:20%;
+}
+.searchRight{
+   position:absolute;
+   bottom:35%;
+   right:20%;
 }
