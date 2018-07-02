@@ -1,0 +1,41 @@
+<!--index.wxml-->
+<view class="container">
+  <image src='./image/slider1.jpg' class="{{current==0?'active_img':''}} backimg"></image>
+  <image src='./image/slider2.jpg' class="{{current==1?'active_img':''}} backimg"></image>
+  <image src='./image/slider3.jpg' class="{{current==2?'active_img':''}} backimg"></image>
+  <image src='./image/slider4.jpg' class="{{current==3?'active_img':''}} backimg"></image>
+  <view wx:if="{{firstPage}}">
+    <canvas style="width:375px; height: 400px;" canvas-id="firstCanvas" class='trangle'></canvas>
+    <canvas style='width:375px;height:400px;' canvas-id='secondCanvas' class='trangle'></canvas>
+    <canvas style='width: 375px;height:400px;' canvas-id='thirdCanvas' class='trangle'></canvas>
+    <!-- logo的标志 -->
+    <view>
+      <cover-image src="./image/logo.png" class='logo' mode='aspectFit'></cover-image>
+    </view>
+    <!-- slogan-->
+    <view id="slogan">
+      <text>{{slogan}}</text>
+    </view>
+  </view>
+  <!-- 拍摄按钮-->
+  <cover-view id='bordercircle' bindtap='start'>
+    <cover-view id='incircle'>
+      <cover-image src='./image/camera.png' mode="aspectFit"></cover-image>
+    </cover-view>
+  </cover-view>
+
+  <!-- 查看历史记录 -->
+  <view id='historybtn'>
+    <text>{{history}}</text>
+  </view>
+
+  <view wx:if="{{!firstPage}}">
+    <!--点击拍摄按钮后，需要canvas画图 -->
+    <canvas id="circleselect" canvas-id='fourthCanvas'></canvas>
+    <view class="{{!firstPage?'show':''}} start_text">
+      <text>{{starttext}}</text>
+    </view>
+  </view>
+
+
+</view>
