@@ -33,7 +33,7 @@
   <view wx:if="{{!firstPage}}">
     <!--点击拍摄按钮后，需要canvas画图 -->
     <canvas id="circleselect" canvas-id='fourthCanvas'></canvas>
-    <view class="show start_text">
+    <view class="{{!firstPage?'show':''}} start_text">
       <text>{{starttext}}</text>
     </view>
     <!--拍摄视频按钮 -->

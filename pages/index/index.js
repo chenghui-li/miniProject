@@ -71,18 +71,20 @@ Page({
     this.circle();
   },
 
-  /* 画圆形 */
+  /* 点击首页拍摄按钮，出现圆环特效 */
   circle(){
     let ctx=wx.createCanvasContext('fourthCanvas');
     let width =this.data.deviceWidth;
     let startAngle = 0.95 * Math.PI;
     let endAngle = 2.05 * Math.PI;
-    // 每次的角度偏移量
-    let xAngle=Math.PI/30;
+    // 每次的角度偏移量，值越大速度越慢
+    let xAngle=Math.PI/180;
     // 临时角度变量
     let tmpAngle=startAngle;
-    setInterval(rander,1);
+    // 开启定时任务，每3s画一次，值越高速度越慢
+    setInterval(rander,3);
 
+    /* 根据每次的偏移量画圆环*/
     function rander(){
       if (tmpAngle >= endAngle) {
         return;
