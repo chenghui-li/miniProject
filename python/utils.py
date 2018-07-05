@@ -1,26 +1,34 @@
+"""Predefine some general functions
+@Author: leroyyi
+@Date:2018-7-1
+"""
+#import needed modules
 from __future__ import division
 from __future__ import print_function
-
 import numpy as np
 import csv
 from scipy import misc
-
 from  bird_dataset_generator import BirdClassificationGenerator
 
 
 #pre-processing stuff
 def gray2rgb(img, path):
+    """pre-precessing stuff"""
     if len(img.shape) < 3:
         img = np.stack((img,)*3,axis=2)
     return img
 
+
 def random_flip_lr(img):
+    """random flip logistic regression"""
     rand_num = np.random.rand(1)
     if rand_num > 0.5:
         img = np.flip(img, 1)
     return img
 
+
 def random_brightness(img):
+    """add random brightness to the image"""
     rand_num = np.random.randint(3, high=10, size=1)/10.0
     img = img * rand_num;
     img = img.astype(dtype=np.uint8)
@@ -28,6 +36,7 @@ def random_brightness(img):
 
 
 def normalize_input(img, height):
+    """normalize the input data"""
     img = img.astype(dtype=np.float32)
     img[:,:,0] -= 103.939
     img[:,:,1] -= 116.779
@@ -35,10 +44,14 @@ def normalize_input(img, height):
     #img = np.divide(img, 255.0)
     return img 
 
+
 def add_random_noise(img):
+    """add random noise to the image data"""
     return img + np.random.normal(0, 50.0, (img.shape))
 
+
 def preprocess_image(img, height, width, set_type):
+    """preprocess the input image"""
     img = misc.imresize(np.asarray(img), (height, width))
     if set_type == 'train':   
         img = random_flip_lr(img)
@@ -48,9 +61,9 @@ def preprocess_image(img, height, width, set_type):
     return img
 
 
-
 # return a batch of input(images, labels) to feed into plavceholders
 def get_batch(generator_type, set_type, height, width):
+    """get input image data in the form of batch"""
     imgs = []
     if set_type == 'train' or set_type == 'val':
         for paths, bbs, labels in generator_type:
@@ -73,9 +86,9 @@ def get_batch(generator_type, set_type, height, width):
         return imgs, None
 
 
-
 #store in required csv format
 def save_csv(model_pred, obj):
+    """store data into csv format file"""
     with open('result.csv',"w") as f:
         writer = csv.writer(f, delimiter=',',  quotechar='"', quoting=csv.QUOTE_ALL)
         row = ['Id', 'Category']

@@ -1,26 +1,38 @@
+"""
+Deep neural net define, training ,validation and testing.
+@Author:leroyyi
+@Date:2018-6-30
+"""
+#import important modules
 from __future__ import division
 from __future__ import print_function
-
-#import important modules
+import time
+import sys
 import tensorflow as tf
 import numpy as np
 import argparse
-import time
-import sys
-
-#import models
 from vgg16 import vgg16
 from alex import alex
-
-#import data generator/provider
 from bird_dataset_generator import BirdClassificationGenerator
-
-#import utility functions
 from utils import get_batch, save_csv
 
 
 class deep_neural_net(object):
+    """A general deep neural net class for vgg16 and alexnet
+    
+    This is a composite general class for both vgg16 and alexnet
+    
+    Attributes:
+        dataset_dir:
+        batch_size:
+        val_ratio:
+        num_epochs:
+        gpu_memory_fraction:
+        model_name:
+        model_weight_path:    
+    """
     def __init__(self, dataset_dir, batch_size=100 , val_ratio= 0.2, num_epochs = 1001,  gpu_memory_fraction = 0.4, model_name='my_vgg', model_weight_path = None):
+        """Initiate deep neural net model"""
         self.batch_size = batch_size 
         self.val_ratio  = val_ratio
         self.num_epochs  = num_epochs
@@ -35,8 +47,15 @@ class deep_neural_net(object):
 
         self.run_training_testing(model_weight_path, gpu_memory_fraction)
 
-
     def evaluate(self, sess, set_type):
+        """Evaluating the precision of the fine-trained model
+           
+        Args:
+            sess: tensorflow sess
+            set_type: options include 'train','val','test'
+        Return:
+            None
+        """
         if set_type == 'val':
             num_images = len(self.obj.val_list)
             generator = self.obj.val_generator()
@@ -55,9 +74,15 @@ class deep_neural_net(object):
 
         print('set_type:',set_type, 'accuracy = ', true_positives*100.0/num_images)
         
-
     #predict the labels for test dataset
     def predict(self, sess, set_type):
+        """Using the fine-trained model to predict testing dataset.
+        
+         Args:
+            sess: tensorflow sess
+            set_type: options include 'train','val','test'
+        Return:
+            None"""
         if set_type == 'val':
             num_images = len(self.obj.val_list)
             generator = self.obj.val_generator()
@@ -76,15 +101,12 @@ class deep_neural_net(object):
             model_predictions.extend(predicted[0])
         return model_predictions
     
-
     def run_training_testing(self, model_weight_path, gpu_memory_fraction):
-
+        """Train the model and test meanwhile"""
         # train the network
         config = tf.ConfigProto()
         config.gpu_options.per_process_gpu_memory_fraction = gpu_memory_fraction
-
         train_generator_obj = self.obj.train_generator()
-
         with tf.Session(config=config) as sess:
             summary_writer = tf.summary.FileWriter('./checkpoints/', sess.graph)
             saver = tf.train.Saver(max_to_keep=5)
@@ -115,7 +137,6 @@ class deep_neural_net(object):
                 self.evaluate(sess, 'val')
                 print('')
 
-
         # predict values for test dataset
         config = tf.ConfigProto()
         config.gpu_options.per_process_gpu_memory_fraction = gpu_memory_fraction
@@ -124,10 +145,8 @@ class deep_neural_net(object):
             saver.restore(sess, tf.train.latest_checkpoint('./checkpoints/'))
             model_pred = self.predict(sess, 'test')    
 
-
         #save the results in the required csv format
         save_csv(model_pred, self.obj)
-
 
 
 if __name__ == "__main__":

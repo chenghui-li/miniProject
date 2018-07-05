@@ -1,18 +1,39 @@
-import numpy as np
+"""
+This is a script used to generate training、 validation and test datasets
+@Author: leroyyi
+@Date: 2018-06-29
+"""
+#import needed modules
 import os
+import numpy as np
 import csv
 import random
-from scipy import misc
+#from scipy import misc
+
 
 def to_categorical(y,num_classes=200):
+    """transform data type"""
     y = np.array(y, dtype='int').ravel()
     n = y.shape[0]
     categorical = np.zeros((n, num_classes))
     categorical[np.arange(n), y] = 1
     return categorical
 
+
 class BirdClassificationGenerator(object):
+    """Generate bird classification input data
+    
+    This class contains multiple methods designed for generating input datasets 
+    for the model.
+    
+    Attributes:
+        dataset_path: path of where the data being saved
+        validation_ratio: ratio of validation dataset with respect to train dataset
+        batch_size: size of batch during each epoch of training
+    """
+    
     def __init__(self, dataset_path, validation_ratio=0.3, batch_size=16):
+        """initiate BirdClassificationGenerator"""
         self.dataset_path = dataset_path
         self.batch_size = batch_size
         self.num_classes = 200
@@ -31,7 +52,6 @@ class BirdClassificationGenerator(object):
                 self.train_list.append(int(row[0]))
                 self.images_dict[int(row[0])] = os.path.join('images',row[1])
                 
-
         with open(os.path.join(dataset_path, 'bounding_boxes_train.txt')) as f:
             spamreader = csv.reader(f, delimiter=' ')
             for row in spamreader:
@@ -42,8 +62,7 @@ class BirdClassificationGenerator(object):
             for row in spamreader:
                 self.train_labels_dict[int(row[0])] = int(row[1]) - 1 #offset by 0 
                 #self.train_labels_dict[int(row[0])] = (int(row[1]) -1 )/ 20 #offset by 0 
-
-        
+    
         with open(os.path.join(dataset_path, 'images_test.txt')) as f:
             spamreader = csv.reader(f, delimiter=' ')
             for row in spamreader:
@@ -53,8 +72,7 @@ class BirdClassificationGenerator(object):
         with open(os.path.join(dataset_path, 'bounding_boxes_test.txt')) as f:
             spamreader = csv.reader(f, delimiter=' ')
             for row in spamreader:
-                self.bb_bird_dict[int(row[0])] = [ int(float(x)) for x in row[1:5] ]
-        
+                self.bb_bird_dict[int(row[0])] = [ int(float(x)) for x in row[1:5] ]   
         
         size_val_list = int(validation_ratio*len(self.train_list))
         self.val_list = random.sample(self.train_list, size_val_list)
@@ -66,10 +84,12 @@ class BirdClassificationGenerator(object):
         #random.shuffle(self.test_list) # not needed
 
     def _shuffle(self):
+        """data shuffle to avoid artificial influence"""
         #random.shuffle(self.val_list) # not needed 
         random.shuffle(self.train_list)
         
     def _generate(self, idx_list, set_type):
+        """generate input dataset"""
         loop = 0
         max_size = len(idx_list)
         while True:
@@ -90,15 +110,17 @@ class BirdClassificationGenerator(object):
             else:
                 yield ([ os.path.join(self.dataset_path, self.images_dict[x]) for x in gen_list ], 
                            np.array([ self.bb_bird_dict[x] for x in gen_list ]))
- 
 
     def train_generator(self):
+        """generator for training process"""
         return self._generate(self.train_list, 'train')
  
     def test_generator(self): 
+        """generator for testing process"""
         return self._generate(self.test_list, 'test')
 
     def val_generator(self):
+        """generator for validation process"""
         return self._generate(self.val_list, 'val')
 
         

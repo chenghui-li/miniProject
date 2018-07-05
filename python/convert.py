@@ -1,9 +1,14 @@
-# Convert the Dataset into the required format(break the train+test data files into separate files) required by the CNN-code
-
+"""
+Convert the Dataset into the required format(break the train+test data files into separate files)
+ required by the CNN-code
+ @Author: leroyyi
+ @Date: 2018-6-30
+"""
 #store train and test image ids
 train_image_ids = []
 test_image_ids = []
-    
+   
+ 
 with open('data/train_test_split.txt') as train_test_file:
     for image_id,line in enumerate(train_test_file):
         is_train = int(line.strip().split()[1])
@@ -25,7 +30,6 @@ with open('data/images.txt') as image_locations, open('data/images_test.txt', "w
             train_image_locations.write(line)
         else:
             test_image_locations.write(line)
-
 
 
 #Splitting Bounding Boxes into two files -- train_labels.txt and test_labels.txt

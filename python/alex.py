@@ -1,8 +1,28 @@
-import tensorflow as tf
+"""
+@Description: Alex model for fine-grained bird classification.
+@Author leroyyi
+@Date 2018-06-28
+"""
+# import needed modules
 import numpy as np
+import tensorflow as tf
+
 
 class alex(object):
+    """Alex CNN model for bird classification
+    
+    This is a CNN model with the structure of AlexNet, 
+    used for fine-grained bird classification.
+    
+    Attributes:
+        dropout: whether to use dropout strategy
+        num_classes: number of categories of bird classification
+        height: height of input images
+        width: width of input iamges
+    """
+    
     def __init__(self, num_classes = 200, dropout=0.5, train= 1,  weight_path=None, param_list1=['fc8'], param_list2 = ['fc6','fc7']):
+        """initiate some attributes from start"""
         self.dropout = dropout
         self.num_classes = num_classes
         self.train  = train
@@ -21,8 +41,8 @@ class alex(object):
         #build the model
         self.build()
 
-
     def build(self):
+        """define conv layer"""
         temp = self.conv(self.x)
         self.logits = self.fc(temp)
 
@@ -30,9 +50,8 @@ class alex(object):
         self.loss_ = tf.nn.softmax_cross_entropy_with_logits(labels=self.y , logits = self.logits)
         self.loss = tf.reduce_mean(self.loss_)
 
-
     def optimize(self, ):
-
+        """define the optimization method"""
         self.global_step = tf.Variable(0, name='global_step', trainable=False)
         
         self.train_op1 = tf.train.AdamOptimizer(learning_rate=0.001)
@@ -63,6 +82,7 @@ class alex(object):
         self.optimizer = tf.group(self.optimizer1, self.optimizer2)
 
     def conv(self, x):
+        """construct convelutional layer of AlexNet model"""
         conv1 = self.conv_layer(x, 3, 96 ,11 ,4, 'conv1', groups = 1, padding = 'SAME')
         lrn1 = tf.nn.lrn(conv1, 2, 2, 1e-4, 0.75,'norm1')
         pool1 = self.max_pool(lrn1, 'pool1')
@@ -79,10 +99,10 @@ class alex(object):
         pool5 = self.max_pool(conv5, 'pool5')
         
         #print(conv1, lrn1, pool1 , conv2, lrn2 , pool2 , conv3, conv4, conv5, pool5)
-
         return pool5
 
     def fc(self, x):
+        """Construct fc layer of AlexNet model"""
         fc6 = self.fc_layer(x, 6*6*256, 4096,'fc6')
         fc7 = self.fc_layer(fc6, 4096, 4096,'fc7')
         fc8 = self.fc_layer(fc7, 4096, self.num_classes,'fc8', pred_layer= True)
@@ -90,6 +110,17 @@ class alex(object):
         return fc8
 
     def conv_layer(self, x, in_channels, out_channels, filter_size, stride, name, groups = 2, padding='SAME'):
+        """Construct convelutional layer of AlexNet model
+        
+        Args:
+            x: input of the model
+            in_channels: data input channel
+            out_channels: data output channel
+            filter_size: the size of filter 
+            stride: stride step for image padding
+        Return:
+            None
+        """
         filt = tf.Variable(tf.truncated_normal(shape=[filter_size, filter_size, int(in_channels/groups), out_channels ], stddev = 0.01), name = name + '_W')
         bias = tf.Variable(tf.constant([0.1], shape=[out_channels]), name = name + '_b')      
         if self.train == 2:
@@ -115,8 +146,16 @@ class alex(object):
 
             return self.relu(tf.nn.bias_add(conv, bias))
 
-
     def fc_layer(self, x, in_channels, out_channels, name, pred_layer= False):
+        """Define the structure of fc layer.
+        
+        Args:
+            x: input data matrix
+            in_channels: data input channel
+            out_channels: data output channel
+        Return:
+            None
+        """
         x = tf.reshape(x, [-1, in_channels])
         weights = tf.get_variable(name = name + '_W', shape=[ in_channels, out_channels ], initializer=tf.contrib.layers.xavier_initializer() )
         bias = tf.Variable(tf.constant([0.1], shape=[out_channels]), name = name + '_b')
@@ -141,12 +180,22 @@ class alex(object):
             return self.relu(tf.nn.bias_add(tf.matmul(x, weights), bias))
         
     def max_pool(self, x, name):
+        """Define the max pooling lay"""
         return tf.nn.max_pool(x, ksize=[1,3,3,1], strides=[1,2,2,1], padding='VALID', data_format='NHWC', name = name)
 
     def relu(self, x):
+        """Relu function"""
         return tf.nn.relu(x)
 
     def load_weight(self,sess, weight_path ):
+        """Load weight predifined weights of cnn into session
+        
+        Args:
+            sess: tensorflow session
+            weight_path: path where to find the cnn weights
+        Return:
+            None
+        """
         pre_trained_weights = np.load(open(weight_path, "rb"), encoding="latin1").item()
         keys = sorted(pre_trained_weights.keys())
         num_non_trainable_param = len(self.param)
