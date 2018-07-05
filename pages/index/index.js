@@ -40,6 +40,7 @@ Page({
    let timeid=setInterval(changeSlide,1800);
    this.setData({timeid:timeid});
   },
+  //画扇形
   canvasTrans(){
     let width = wx.getSystemInfoSync().windowWidth;
     this.setData({deviceWidth:width});
