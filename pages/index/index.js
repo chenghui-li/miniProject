@@ -1,8 +1,10 @@
-// 初始页面
-//index.js
-//获取应用实例
-const app = getApp()
 
+const app = getApp()
+/**
+ * 初始页面
+ * index.js
+ *  获取应用实例
+ */
 Page({
   data: {
     // 当前活跃的图片编号
@@ -14,12 +16,16 @@ Page({
     camerasrc: './image/camera.png',
     cancle: false
   },
-  // onReady函数：生命周期函数--监听页面初次渲染完成
+  /**
+   * onReady函数：生命周期函数--监听页面初次渲染完成
+   */
   onReady() {
     this.slideshow();
     this.canvasTrans();
   },
-  // 页面渐入渐出背景图片
+  /**
+   * 页面渐入渐出背景图片
+   */
   slideshow() {
     let that = this;
     let query = wx.createSelectorQuery();
@@ -41,7 +47,9 @@ Page({
       timeid: timeid
     });
   },
-  //画扇形
+  /**
+  *画扇形
+  */
   canvasTrans() {
     let width = wx.getSystemInfoSync().windowWidth;
     this.setData({
@@ -51,7 +59,9 @@ Page({
     this.trangle('secondCanvas', width / 2, 0, 0, 250, width, 250, 0.03);
     this.trangle('thirdCanvas', width / 2, 70, width / 4, 180, width * 3 / 4, 180, 0.08);
   },
-  // 页面三角形变换效果
+  /**
+   * 页面三角形变换效果
+   */
   trangle(canvansid, x1, y1, x2, y2, x3, y3, ahap) {
     var ctx = wx.createCanvasContext(canvansid);
     // 开始绘制三角
@@ -68,7 +78,9 @@ Page({
     ctx.fill();
     ctx.draw();
   },
-  // 当点击按钮时，让图标slogan，三角形不显示, 画圆
+  /**
+   * 当点击按钮时，让图标slogan，三角形不显示, 画圆
+   */
   start() {
     clearTimeout(this.data.timeid);
     this.setData({
@@ -81,7 +93,9 @@ Page({
     this.circle(0.95 * Math.PI, 2.05 * Math.PI, false);
   },
 
-  // 点击首页拍摄按钮，出现圆环特效
+  /**
+   * 点击首页拍摄按钮，出现圆环特效
+   */ 
   circle(startAngle, endAngle, dercote) {
     let ctx = wx.createCanvasContext('fourthCanvas');
     let width = this.data.deviceWidth;
@@ -92,7 +106,9 @@ Page({
     // 开启定时任务，每3s画一次，值越高速度越慢
     setInterval(rander, 3);
 
-  // 根据每次的偏移量画圆环
+  /**
+   * 根据每次的偏移量画圆环
+   */ 
     function rander() {
       if (tmpAngle >= endAngle) {
         return;
@@ -110,7 +126,9 @@ Page({
     }
   },
 
-  // 点击拍摄按钮，进入拍摄页面
+  /**
+   * 点击拍摄按钮，进入拍摄页面
+   */ 
   cameraFn() {
     var that = this;
     wx.chooseVideo({
@@ -123,7 +141,9 @@ Page({
     })
   },
 
-  // 点击上传视频，进入选择视频上传页面
+  /**
+   * 点击上传视频，进入选择视频上传页面
+   */ 
   uploadFn() {
     var that = this;
     wx.chooseVideo({
@@ -136,7 +156,9 @@ Page({
     });
   },
 
-  // 云端上传任务
+  /**
+   * 云端上传任务
+   */ 
   uploadCloudTask(res) {
     var that = this;
     // 显示上传中
@@ -144,13 +166,17 @@ Page({
       title: '上传中',
     })
 
-  // 云端初始化
+  /**
+   * 云端初始化
+   */
   wx.cloud.init({
       env: "dynamic-3a28b7",
       traceUser: true
     });
 
-    // 上传任务
+    /**
+     * 上传任务
+     */
     const uploadTask = wx.cloud.uploadFile({
       cloudPath: 'video' + (Math.floor(1 + Math.random() * 10000)) + '.mp4',
       filePath: res.tempFilePath, // 小程序临时文件路径
@@ -166,7 +192,9 @@ Page({
     });
   },
 
-  // 根据得到的fileID得到相应的URL
+  /**
+   * 根据得到的fileID得到相应的URL
+   */ 
   getUrl(fileId) {
     let that = this;
     const getURL = wx.cloud.getTempFileURL({
@@ -180,7 +208,9 @@ Page({
     });
   },
 
-  // 将得到的视频URL传给后台
+  /**
+   * 将得到的视频URL传给后台
+   */ 
   transfer(url) {
     // 通过调用 node服务器跳过微信平台时间的限制
     const requestTask = wx.request({
@@ -223,7 +253,9 @@ Page({
     })
   },
 
-  // 跳转到历史记录页面
+  /**
+   * 跳转到历史记录页面
+   */ 
   historyFn() {
     //页面跳转
     wx.navigateTo({
