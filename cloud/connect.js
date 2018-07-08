@@ -1,31 +1,30 @@
-
-//导入包
+/*导???~E*/
 var http = require('http');
 var exec = require('child_process').exec;
 var querystring = require('querystring');
-//建立server，与客户端通信
+/*建?Kserver?L?N客??端?~Z信*/
 http.createServer(function(req,res){
-    var body = "";   //待接收的数据
+    var body = "";   /*?E?????~D录°??*/
     req.on('data',function(chunk){
-        body += chunk;    //将所有接收到的数据进行拼接
+        body += chunk;    /*?F?~@?~I?????°?~D录°??达[*/
     });
-    //发送数据给客户端
-    req.on('end',function(){    
+Socket error Event: 32 Error: 10053.
+Connection closing...Socket close.
         body = querystring.parse(body);
-        //响应头
+Connection closed by foreign host.
         res.writeHead(200, {'Content-Type': 'text/html; charset=utf8'});
-        var arg = body.key;
-        //执行本服务器的python文件
-        exec('python test.py '+ arg,function(error,stdout,stderr){
-            if(stdout.length > 1){
-                res.write(stdout);   //将python文件的输出发送给客户端
-            }else{   //容错处理
+Disconnected from remote host(新建会话 (2)) at 00:56:37.
+        /*?§?L???~M??余¨?~Dpython彖~G件*/
+Type `help' to learn how to use Xshell prompt.ror,stdout,stderr){
+[C:\~]$ 
+                res.write(stdout);   /*?Fpython彖~G件?~D轾S??住~Q?~A纾Y客??端*/
+            }else{   /*容?~Y?D?~F*/
                 res.write('no res');
             }
             if(error){
                 res.write('error!!!');
             }
-            res.end();   //发送完毕
+            res.end();   /*住~Q?~A?L?U*/
         })
     });
-}).listen(80);   //监听80端口
+}).listen(80);   /*?~Q佐?80端住?*/

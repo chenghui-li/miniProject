@@ -18,15 +18,15 @@
     </view>
   </view>
   <!-- 拍摄按钮-->
-  <cover-view id='bordercircle' bindtap='start'>
+  <cover-view id='bordercircle' bindtap="{{!cancle?'start':''}}">
     <cover-view id='incircle'>
-      <cover-image src='./image/camera.png' mode="aspectFit"></cover-image>
+      <cover-image src='{{camerasrc}}' mode="aspectFit"></cover-image>
     </cover-view>
   </cover-view>
 
   <!-- 查看历史记录 -->
   <view id='historybtn'>
-    <text>{{history}}</text>
+    <text bindtap='historyFn'>{{history}}</text>
   </view>
 
   <!-- 探索页面-->
@@ -39,7 +39,7 @@
     <!--拍摄视频按钮 -->
     <view class="searchBtn searchLeft" bindtap='cameraFn'>
       <view>
-        <image src="./image/camera.png"></image>
+        <image src="./image/camera2.png"></image>
       </view>
       <view>
         <text>拍摄视频</text>
@@ -48,7 +48,7 @@
     <!--上传视频按钮 -->
     <view class="searchBtn searchRight" bindtap='uploadFn'>
       <view>
-        <image src="./image/camera.png"></image>
+        <image src="./image/upvideo.png"></image>
       </view>
       <view>
         <text>上传视频</text>

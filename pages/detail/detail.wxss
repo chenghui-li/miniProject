@@ -1,0 +1,96 @@
+
+/* pages/detail/detail.wxss */
+.back_img{
+  width:100vw;
+  height:100vh;
+  position:fixed;
+  top:0;
+  left:0;
+}
+
+/*.mengban{
+  width:100%;
+  height:100%;
+  background: rgba(255,0,0,0.6)
+  position：fixed;
+  top:0;
+  left:0;
+  z-index:2;
+}*/
+.info_block{
+position:absolute;
+top:13vh;
+left:3.5vh;
+width:90vw;
+height:80vh;
+opacity: 0;
+transition: opacity 1s linear;
+}
+.show{
+  opacity:1;
+}
+
+/*讲解卡片的背景图*/
+.info_back_img{
+  width:90vw;
+  height:66vh;
+  position: absolute;
+  top:0;
+  left:0;
+  z-index:3;
+}
+
+.animal{
+  height: 10vh;
+  width:10vw;
+}
+.article text{
+  line-height: 10vw;
+  padding-bottom: 2px;
+  padding-top: 2px;
+  border-bottom: gainsboro solid 2px; 
+  font-size:19px;
+  font-weight: 300;
+}
+.info{
+  width:80vw;
+  height: 50vh;
+  z-index: 4;
+  position: absolute;
+  top:10vh;
+  left: 46vw;
+  transform: translateX(-50%);
+  line-height: 1.5rem;
+  font-size: 1.5rem;
+  font-family: sans-serif;
+}
+.title{
+  line-height: 2rem;
+  text-align: center;
+
+}
+.info text{
+  border-bottom: gainsboro solid black
+}
+
+.site{
+  color:lightblue;
+  font-weight: 600 !important;
+}
+
+#historybtn{
+width: 100%;
+position: absolute;
+bottom:10%;
+left: 0;
+text-align: center;
+color: white;
+font-weight: bolder;
+font-size: 18px;
+font-family:"Microsoft Yahei";
+}
+#historybtn text{
+  padding-bottom: 6px;
+  border-bottom: #30ffeb solid 2px;
+}
+

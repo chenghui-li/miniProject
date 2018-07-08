@@ -94,10 +94,13 @@ color: white;
 font-family: Microsoft YaHei;
 font-weight: bolder;
 font-size: 18px;
+
 }
 #historybtn text{
   padding-bottom: 6px;
   border-bottom: #30ffeb solid 2px;
+  padding-top:50px;
+  z-index: 10;
 }
 
 /*探索页面相关样式*/
@@ -138,15 +141,20 @@ font-size: 18px;
 .searchBtn image{
    width:70rpx;
    height:60rpx;
-   border-bottom: 2px;
 }
 .searchLeft{
   position:absolute;
-  bottom:35%;
+  bottom:33%;
   left:20%;
+}
+.searchLeft image{
+  margin-bottom: 3px;
 }
 .searchRight{
    position:absolute;
-   bottom:35%;
+   bottom:33%;
    right:20%;
+}
+.searchRight{
+  margin-bottom:2px;
 }

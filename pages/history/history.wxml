@@ -1,0 +1,17 @@
+<view>
+  <image src='./image/bg.jpg' class='backimg' style="z-index:10"></image>
+
+  <block wx:for="{{historyList}}" wx:key="index">
+      <view class='container' bindtap='detailFn'>
+        <view class='left'>
+          <cover-image src='{{item.img}}'></cover-image>
+        </view>
+        <view class='center'>
+          <view class='name'>名称： {{item.name}}</view>
+          <view class='time'>识别时间： {{item.time}}</view>
+        </view>
+        <view class='right'>
+        </view>
+      </view>
+  </block>
+</view>
