@@ -12,8 +12,7 @@ Page({
 
   /**
    * 生命周期函数--监听页面加载
-   * @options 页面跳转传递的参数
-   * @param {int} test input param
+   * @param {int} options input param
    * @return {int} res result of the func
   */
   onLoad: function(options) {
