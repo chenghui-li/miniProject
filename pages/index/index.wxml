@@ -12,7 +12,7 @@
     <view>
       <cover-image src="./image/logo.png" class='logo' mode='aspectFit'></cover-image>
     </view>
-    <!-- slogan-->
+    <!-- slogan的展示-->
     <view id="slogan">
       <text>{{slogan}}</text>
     </view>
@@ -54,8 +54,6 @@
         <text>上传视频</text>
       </view>
     </view>
-
   </view>
-
 
 </view>

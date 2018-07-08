@@ -1,45 +1,35 @@
-﻿Page({
+// 查看动物详情页面
 
-  /**
-   * 页面的初始数据
-   */
+Page({
+  // 页面的初始数据
   data: {
-    history:'查看历史记录'
+    history : '查看历史记录'
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
+  // 生命周期函数--监听页面加载
   onLoad: function(options) {
-    console.log(options.result);
-    this.setData({
-      img:options.img,
-      name: options.name,
-      info: options.distribution,
-      dangerous:options.dangerous,
-      ename:options.Ename
-    });
-
-    // const db = wx.cloud.database({
-    //   env: 'dynamic-3a28b7'
-    // })
-    // db.collection('Birds').doc('swan').get({
-    //    sucess:res=>{
-    //      console.log(res.data);
-    //    },
-    //    fail:err=>{
-    //      console.log(err.errCode,err.errMsg);
-    //    }
-    // });
-  },
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
+//  做一个判断，结果识别成功和失败呈现不同的效果
+    if (options.result == 'null' || options.result == null) {  //识别未知生物
+      this.setData({
+        img : './image/unknown.jpg',
+        name : '未知生物',
+        info : '未识别出生物，请重试',
+        dangerous : '',
+        ename : ''
+      });
+    } 
+    else {  //识别生物成功
+      this.setData({
+        img : options.img,
+        name : options.name,
+        info : options.distribution,
+        dangerous : options.dangerous,
+        ename : options.Ename
+      });
+    }
   },
 
-  /*跳转到历史记录页面 */
+  // 跳转到历史记录页面
   historyFn() {
     //页面跳转
     wx.navigateTo({

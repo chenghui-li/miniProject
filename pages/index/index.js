@@ -1,3 +1,4 @@
+// 初始页面
 //index.js
 //获取应用实例
 const app = getApp()
@@ -11,21 +12,14 @@ Page({
     firstPage: true,
     timeid: '',
     camerasrc: './image/camera.png',
-    cancle:false
+    cancle: false
   },
-  // onReady只会出现一次首页，使用onshow
-  /*onShow(){
-   if(!this.data.firstPage){
-     this.setData({ firstPage: true, current: 0 }); 
-   }
-    this.slideshow();
-    this.canvasTrans(); 
-  },*/
+  // onReady函数：生命周期函数--监听页面初次渲染完成
   onReady() {
     this.slideshow();
     this.canvasTrans();
   },
-  /*页面渐入渐出背景图片*/
+  // 页面渐入渐出背景图片
   slideshow() {
     let that = this;
     let query = wx.createSelectorQuery();
@@ -47,7 +41,7 @@ Page({
     });
   },
   //画扇形
-  canvasTrans(){
+  canvasTrans() {
     let width = wx.getSystemInfoSync().windowWidth;
     this.setData({
       deviceWidth: width
@@ -56,7 +50,7 @@ Page({
     this.trangle('secondCanvas', width / 2, 0, 0, 250, width, 250, 0.03);
     this.trangle('thirdCanvas', width / 2, 70, width / 4, 180, width * 3 / 4, 180, 0.08);
   },
-  /*三角形 */
+  // 页面三角形变换效果
   trangle(canvansid, x1, y1, x2, y2, x3, y3, ahap) {
     var ctx = wx.createCanvasContext(canvansid);
     // 开始绘制三角
@@ -73,7 +67,7 @@ Page({
     ctx.fill();
     ctx.draw();
   },
-  /*当点击按钮时，让图标slogan，三角形不显示,画圆 */
+  // 当点击按钮时，让图标slogan，三角形不显示, 画圆
   start() {
     clearTimeout(this.data.timeid);
     this.setData({
@@ -83,17 +77,11 @@ Page({
       /*camerasrc:'./image/cancle.png',
       cancle:true,*/
     });
-    this.circle(0.95 * Math.PI, 2.05 * Math.PI,false);
+    this.circle(0.95 * Math.PI, 2.05 * Math.PI, false);
   },
 
-  /* 点击取消按钮时*/
- /* cancle(){
-    console.log('取消');
-    this.circle( 0,  Math.PI,true);
-  },*/
-
-  /* 点击首页拍摄按钮，出现圆环特效 */
-  circle(startAngle, endAngle,dercote) {
+  // 点击首页拍摄按钮，出现圆环特效
+  circle(startAngle, endAngle, dercote) {
     let ctx = wx.createCanvasContext('fourthCanvas');
     let width = this.data.deviceWidth;
     /*let startAngle = 0.95 * Math.PI;
@@ -105,7 +93,7 @@ Page({
     // 开启定时任务，每3s画一次，值越高速度越慢
     setInterval(rander, 3);
 
-    /* 根据每次的偏移量画圆环*/
+  // 根据每次的偏移量画圆环
     function rander() {
       if (tmpAngle >= endAngle) {
         return;
@@ -123,23 +111,20 @@ Page({
     }
   },
 
-  /*点击拍摄按钮，进入拍摄页面 */
+  // 点击拍摄按钮，进入拍摄页面
   cameraFn() {
-    /*wx.navigateTo({
-      url: '../camera/camera'
-    });*/
     var that = this;
     wx.chooseVideo({
       sourceType: ['camera'],
-      maxDuration: 60,
+      maxDuration: 10,
       camera: 'back',
       success: function(res) {
-       that.uploadCloudTask(res);
+        that.uploadCloudTask(res);
       }
     })
   },
 
-  /*上传视频*/
+  // 点击上传视频，进入选择视频上传页面
   uploadFn() {
     var that = this;
     wx.chooseVideo({
@@ -149,64 +134,40 @@ Page({
       success: function(res) {
         that.uploadCloudTask(res);
       }
-
     });
   },
 
-/*云端上传任务 */
+  // 云端上传任务
   uploadCloudTask(res) {
-    var that=this;
-    console.log(res);
+    var that = this;
     // 显示上传中
     wx.showLoading({
       title: '上传中',
     })
 
-    // 云端初始化
-    wx.cloud.init({
+  // 云端初始化
+  wx.cloud.init({
       env: "dynamic-3a28b7",
       traceUser: true
     });
 
     // 上传任务
     const uploadTask = wx.cloud.uploadFile({
-      cloudPath:'video' + (Math.floor(1 + Math.random() * 10000)) + '.mp4',
+      cloudPath: 'video' + (Math.floor(1 + Math.random() * 10000)) + '.mp4',
       filePath: res.tempFilePath, // 小程序临时文件路径
     }).then(res => {
-      // get resource ID
-       console.log('上传成功' + res.fileID);
-      // that.saveToDB(res.fileID);
       that.getUrl(res.fileID);
-
     }).catch(error => {
       // handle error
-      console.log('上传失败111' + error.errMsg);
       wx.showToast({
         title: '上传失败',
-        icon: 'success',
+        icon: 'fail',
         duration: 2000
       })
     });
   },
 
-
-  /*将上传的视频存到数据库 */
-  /*saveToDB: function(fileID) {
-    const db = wx.cloud.database()
-    db.collection('video').add({
-      data: {
-        fileID,
-      }
-    }).then(res => {
-       console.log('保存数据库成功')
-    }).catch(err => {
-      this.setData({
-        statusMsg: `保存到数据库失败：${err.errMsg}`,
-      })
-    })
-  }*/
-
-  /*根据得到的fileID得到相应的URL */
+  // 根据得到的fileID得到相应的URL
   getUrl(fileId) {
     let that = this;
     const getURL = wx.cloud.getTempFileURL({
@@ -214,80 +175,60 @@ Page({
         fileID: fileId
       }]
     }).then(res => {
-      console.log('获取成功', res)
       that.transfer(res.fileList[0].tempFileURL);
     }).catch(error => {
       // handle error
-      console.log('获取失败', error)
     });
-    console.log(getURL);
   },
 
-  /*将得到的视频URL传给后台 */
+  // 将得到的视频URL传给后台
   transfer(url) {
-    // console.log(new Date().toLocaleString());
-    // console.log(url);
-
-    // wx.request({
-    //   url: '',
-    //   method: 'POST'
-    // });
-    // const transferURL = wx.cloud.callFunction({
-    //   name: 'getBirdInfo',
-    //   data: {
-    //     key: url,
-    //     /*time:new Date().toLocaleString()*/
-    //   }
-    // }).then(res => {
-    //   console.log('云函数获取成功result=', res)
-    //   // 隐藏状态框
-    //   wx.hideLoading();
-    //   //页面跳转
-    //   wx.navigateTo({
-    //     url: '../detail/detail?result=' + res
-    //   });
-    // }).catch(error => {
-    //   // handle error
-    // });
+    // 通过调用 node服务器跳过微信平台时间的限制
     const requestTask = wx.request({
-       method: 'POST',
-       url : 'https://api.docschina.org/api/mini/video' ,
-       data : {
-         "key" : url
-       } ,
-       header:{
-         'content-type':'application/json'
-       },
-       success:function(res){
-         console.log('云函数获取成功result=', res.data.data.name);
-         let id = res.data.data.name;
-         const find = wx.cloud.callFunction({
-            name: 'getBirdInfo',
-            data: {
-              key : id,
-              time:new Date().toLocaleString()
-            }
-          }).then(res => {
-            console.log('云函数获取成功result=', res.result)
+      method: 'POST',
+      url: 'https://api.docschina.org/api/mini/video',
+      data: {
+        "key": url
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function(res) {
+        let id = res.data.data.name;
+        const find = wx.cloud.callFunction({
+          name: 'getBirdInfo',
+          data: {
+            key: id,
+            time: new Date().toLocaleString()
+          }
+        }).then(res => {
+          // 做一个识别成功和失败结果的识别
+          if (res.result === '' || res.result == null) {
+            wx.hideLoading();
+            //识别失败就传给详情页面一个result值做判断
+            wx.navigateTo({
+              url: '../detail/detail?result=' + null
+            })
+          } else {
             // 隐藏状态框
             wx.hideLoading();
-            //页面跳转
+            //识别成功就将得到的结果通过参数传给详情页，同时也给result赋值方便判断
             wx.navigateTo({
-              url: '../detail/detail?Ename=' + res.result.Ename + '&distribution=' + res.result.distribution + '&img=' + res.result.img + '&dangerous=' + res.result.dangerous + '&name=' + res.result.name + '&rare=' + res.result.rare
-               
+              url: '../detail/detail?Ename=' + res.result.Ename + '&distribution=' + res.result.distribution + '&img=' +    res.result.img + '&dangerous=' + res.result.dangerous + '&name=' + res.result.name + '&rare=' + res.result.rare + '&result=' + 'success'
             });
-          }).catch(error => {
-            // handle error
-          });
-       }
+          }
+        }).catch(error => {
+          // handle error
+        });
+      }
     })
   },
 
-  /*跳转到历史记录页面 */
-  historyFn(){
+  // 跳转到历史记录页面
+  historyFn() {
     //页面跳转
     wx.navigateTo({
-      url: '../history/history' 
+      url: '../history/history'
     });
   }
 

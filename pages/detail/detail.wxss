@@ -1,4 +1,3 @@
-
 /* pages/detail/detail.wxss */
 .back_img{
   width:100vw;
@@ -35,6 +34,7 @@ height:80vh;
  float:left;
  z-index:10;
 }
+
 .article text{
   line-height: 10vw;
   padding-bottom: 2px;
@@ -43,6 +43,7 @@ height:80vh;
   font-size:19px;
   font-weight: 300;
 }
+
 .info{
   width:80vw;
   height: 50vh;
@@ -55,11 +56,12 @@ height:80vh;
   font-size: 1.5rem;
   font-family: sans-serif;
 }
+
 .title{
   line-height: 2rem;
   text-align: center;
-
 }
+
 .info text{
   border-bottom: gainsboro solid black
 }
@@ -80,6 +82,7 @@ font-weight: bolder;
 font-size: 18px;
 font-family:"Microsoft Yahei";
 }
+
 #historybtn text{
   padding-bottom: 6px;
   border-bottom: #30ffeb solid 2px;

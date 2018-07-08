@@ -5,15 +5,18 @@
   width:100vw;
   height:150vh;
 }
+
 .name{
  font-size:15px;
  font-weight: bolder;
 }
+
 .time{
   font-size:12px;
   margin-top: 5px;
   color: gray;
 }
+
 .container{
 height:12vh;
 display:flex;
@@ -34,15 +37,8 @@ box-shadow: 5px 5px 5px #888888;
   width:20vw;
   margin-right: 2vw;
 }
+
 .center{
   flex:1;
   font-family: Microsoft YaHei;
 }
-
-/*.right{
-  width:3vw;
-  height:3vw;
-  border-right: 1px solid black;
-  border-bottom:1px solid black;
-  transform:rotate(-45deg);
-}*/
