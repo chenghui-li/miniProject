@@ -13,6 +13,8 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    * @options 页面跳转传递的参数
+   * @param {int} null
+   * @return {null}
   */
   onLoad: function(options) {
 //  做一个判断，结果识别成功和失败呈现不同的效果
@@ -39,7 +41,8 @@ Page({
 
   /**
    * 跳转到历史记录页面
-   * 
+   * @param {int} null
+   * @return {null}
   */
   historyFn() {
     //页面跳转
