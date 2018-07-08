@@ -66,8 +66,15 @@ Page({
   },
   /**
    * 页面三角形变换效果
-   * @param {int} test input param
-   * @return {int} res result of the func
+   * @param {int} canvansid input param1
+   * @param {int} x1 input param2
+   * @param {int} y1 input param1
+   * @param {int} x2 input param1
+   * @param {int} y2 input param1
+   * @param {int} x3 input param1
+   * @param {int} y3 input param1
+   * @param {int} ahap input param1
+   * @return {int} result result of the func
    */
   trangle(canvansid, x1, y1, x2, y2, x3, y3, ahap) {
     var ctx = wx.createCanvasContext(canvansid);
@@ -104,7 +111,9 @@ Page({
 
   /**
    * 点击首页拍摄按钮，出现圆环特效
-   * @param {int} test input param
+   * @param {int} startAngle input param1
+   * @param {int} endAngle input param2
+   * @param {int} dercote input param3
    * @return {int} res result of the func
    */ 
   circle(startAngle, endAngle, dercote) {
@@ -217,7 +226,7 @@ Page({
 
   /**
    * 根据得到的fileID得到相应的URL
-   * @param {int} test input param
+   * @param {int} fileId input param
    * @return {int} res result of the func
    */ 
   getUrl(fileId) {
