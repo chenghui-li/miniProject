@@ -29,6 +29,7 @@ Page({
       let current = that.data.current
       current++;
       if (current >= 3) {
+          //当索引大于3，就从0开始。
         current = 0;
       }
       that.setData({
