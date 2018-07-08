@@ -33,7 +33,10 @@ Page({
     let that = this;
     let query = wx.createSelectorQuery();
     let imgs = query.select('.container image');
-    // 切换图片的函数
+    /** 切换图片的函数
+     * @param {int} in input param
+     * @result {int} result reponse
+    */
     function changeSlide() {
       let current = that.data.current
       current++;
