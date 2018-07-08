@@ -14,7 +14,8 @@ Page({
   
   /**
    * 生命周期函数--监听页面加载
-   *
+   * @param {int} options input param
+   * @return {int} res result of the func
   */
   onLoad: function (options) {
     // 云端初始化
@@ -25,6 +26,8 @@ Page({
 
   /**
    * 调用腾讯云中的queryDB函数方法查询历史记录
+   * @param {int} test input param
+   * @return {int} res result of the func
    */
     const find = wx.cloud.callFunction({
       name: 'queryDB',
