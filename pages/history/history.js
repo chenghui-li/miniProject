@@ -2,12 +2,18 @@
 
 Page({
 
-  // 页面的初始数据
+  /**
+   * 页面的初始数据
+   *
+  */
   data: {
     historyList:[]
   },
   
-  // 生命周期函数--监听页面加载
+  /**
+   * 生命周期函数--监听页面加载
+   *
+  */
   onLoad: function (options) {
     // 云端初始化
     wx.cloud.init({
@@ -15,7 +21,9 @@ Page({
       traceUser: true
     });
 
-  // 调用腾讯云中的queryDB函数方法查询历史记录
+  /**
+   * 调用腾讯云中的queryDB函数方法查询历史记录
+   */
     const find = wx.cloud.callFunction({
       name: 'queryDB',
       data: {}
