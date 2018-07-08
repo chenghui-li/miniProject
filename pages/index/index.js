@@ -85,8 +85,6 @@ Page({
   circle(startAngle, endAngle, dercote) {
     let ctx = wx.createCanvasContext('fourthCanvas');
     let width = this.data.deviceWidth;
-    /*let startAngle = 0.95 * Math.PI;
-    let endAngle = 2.05 * Math.PI;*/
     // 每次的角度偏移量，值越大速度越慢
     let xAngle = Math.PI / 180;
     // 临时角度变量
