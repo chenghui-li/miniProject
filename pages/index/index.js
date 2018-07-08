@@ -1,4 +1,3 @@
-
 const app = getApp()
 /**
  * 初始页面
@@ -18,6 +17,8 @@ Page({
   },
   /**
    * onReady函数：生命周期函数--监听页面初次渲染完成
+   * @param {int} null
+   * @return {null}
    */
   onReady() {
     this.slideshow();
@@ -25,6 +26,8 @@ Page({
   },
   /**
    * 页面渐入渐出背景图片
+   * @param {int} null
+   * @return {null}
    */
   slideshow() {
     let that = this;
@@ -35,7 +38,7 @@ Page({
       let current = that.data.current
       current++;
       if (current >= 3) {
-          //当索引大于3，就从0开始。
+          /*当索引大于3，就从头开始*/
         current = 0;
       }
       that.setData({
@@ -49,6 +52,8 @@ Page({
   },
   /**
   *画扇形
+  * @param {int} null
+  * @return {null}
   */
   canvasTrans() {
     let width = wx.getSystemInfoSync().windowWidth;
@@ -61,6 +66,8 @@ Page({
   },
   /**
    * 页面三角形变换效果
+   * @param {int} null
+   * @return {null}
    */
   trangle(canvansid, x1, y1, x2, y2, x3, y3, ahap) {
     var ctx = wx.createCanvasContext(canvansid);
@@ -80,6 +87,8 @@ Page({
   },
   /**
    * 当点击按钮时，让图标slogan，三角形不显示, 画圆
+   * @param {int} null
+   * @return {null}
    */
   start() {
     clearTimeout(this.data.timeid);
@@ -95,6 +104,8 @@ Page({
 
   /**
    * 点击首页拍摄按钮，出现圆环特效
+   * @param {int} null
+   * @return {null}
    */ 
   circle(startAngle, endAngle, dercote) {
     let ctx = wx.createCanvasContext('fourthCanvas');
@@ -108,6 +119,8 @@ Page({
 
   /**
    * 根据每次的偏移量画圆环
+   * @param {int} null
+   * @return {null}
    */ 
     function rander() {
       if (tmpAngle >= endAngle) {
@@ -128,6 +141,8 @@ Page({
 
   /**
    * 点击拍摄按钮，进入拍摄页面
+   * @param {int} null
+   * @return {null}
    */ 
   cameraFn() {
     var that = this;
@@ -143,6 +158,8 @@ Page({
 
   /**
    * 点击上传视频，进入选择视频上传页面
+   * @param {int} null
+   * @return {null}
    */ 
   uploadFn() {
     var that = this;
@@ -158,6 +175,8 @@ Page({
 
   /**
    * 云端上传任务
+   * @param {int} null
+   * @return {null}
    */ 
   uploadCloudTask(res) {
     var that = this;
@@ -168,6 +187,8 @@ Page({
 
   /**
    * 云端初始化
+   * @param {int} null
+   * @return {null}
    */
   wx.cloud.init({
       env: "dynamic-3a28b7",
@@ -176,6 +197,8 @@ Page({
 
     /**
      * 上传任务
+     * @param {int} null
+     * @return {null}
      */
     const uploadTask = wx.cloud.uploadFile({
       cloudPath: 'video' + (Math.floor(1 + Math.random() * 10000)) + '.mp4',
@@ -194,6 +217,8 @@ Page({
 
   /**
    * 根据得到的fileID得到相应的URL
+   * @param {int} null
+   * @return {null}
    */ 
   getUrl(fileId) {
     let that = this;
@@ -210,6 +235,8 @@ Page({
 
   /**
    * 将得到的视频URL传给后台
+   * @param {int} null
+   * @return {null}
    */ 
   transfer(url) {
     // 通过调用 node服务器跳过微信平台时间的限制
@@ -255,6 +282,8 @@ Page({
 
   /**
    * 跳转到历史记录页面
+   * @param {int} null
+   * @return {null}
    */ 
   historyFn() {
     //页面跳转
