@@ -4,7 +4,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    img:'',
+    img:'./image/1.jpg',
     name:'池鹭',
     info:'一直内疚卡都吃饭好副本成就撒不错v空间啊是出库成本挂错不该是吃吧看',
     website:'wwww.baidu.com',
@@ -20,7 +20,6 @@ Page({
     let res=options.result;
     console.log(res.img);
     this.setData({
-      show:true
       /*img:res.img,
       name:res.name,
       info:res.info,
@@ -39,7 +38,6 @@ Page({
     //    }
     // });
   },
-
   /**
    * 用户点击右上角分享
    */

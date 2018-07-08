@@ -46,12 +46,8 @@ Page({
       timeid: timeid
     });
   },
-<<<<<<< HEAD
-  canvasTrans() {
-=======
   //画扇形
   canvasTrans(){
->>>>>>> d298466316b7024dd4174e1361d465b3f3233204
     let width = wx.getSystemInfoSync().windowWidth;
     this.setData({
       deviceWidth: width

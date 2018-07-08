@@ -106,10 +106,10 @@ font-size: 18px;
 /*探索页面相关样式*/
 #circleselect{
   position: absolute;
-  bottom: 10%;
+  bottom: 20%;
   left:0;
-  width: 750rpx;
-  height:550rpx;
+  width: 100vw;
+  height:450rpx;
   opacity: 0;
 }
 .start_text{
