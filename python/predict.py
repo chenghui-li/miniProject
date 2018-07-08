@@ -28,7 +28,7 @@ def prediction(image_url_list,batch_size = 4):
     model_predictions = []
     generator = _generate(image_url_list, batch_size)
     with tf.Session() as sess:
-        saver = tf.train.import_meta_graph('./checkpoints/Mymodel-8-8.meta')  #restore graph structure
+        saver = tf.train.import_meta_graph('./checkpoints/Mymodel-9-9.meta')  #restore graph structure
         saver.restore(sess, tf.train.latest_checkpoint('./checkpoints/'))      #restore parameters
         sess.run(tf.global_variables_initializer())
         for i in range(num_batches):
