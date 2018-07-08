@@ -4,12 +4,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    img:'./image/1.jpg',
-    name:'池鹭',
-    info:'一直内疚卡都吃饭好副本成就撒不错v空间啊是出库成本挂错不该是吃吧看',
-    website:'wwww.baidu.com',
-    history:'查看历史记录',
-    show:false
+    history:'查看历史记录'
   },
 
   /**
@@ -17,15 +12,14 @@ Page({
    */
   onLoad: function(options) {
     console.log(options.result);
-    let res=options.result;
-    console.log(res.img);
     this.setData({
-      /*img:res.img,
-      name:res.name,
-      info:res.info,
-      website:res.website,
-      history:res.history*/
+      img:options.img,
+      name: options.name,
+      info: options.distribution,
+      dangerous:options.dangerous,
+      ename:options.Ename
     });
+
     // const db = wx.cloud.database({
     //   env: 'dynamic-3a28b7'
     // })

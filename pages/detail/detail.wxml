@@ -1,18 +1,22 @@
 <view class='container'>
   <image src='./image/bg.jpg' class='back_img'></image>
-  <view class='mengban'></view>
-  <cover-image src='./image/1.jpg' class='animal' style='height:25vw;width:27vw;margin-left:36.5vw;margin-top:6vw'></cover-image>
-  <view class="info_block {{show?'show':''}}">
+  <image src='{{img}}' class='animal'></image>
+  <view class="info_block">
     <image src='./image/detail_bg.jpg' class='info_back_img'></image>
     <view class='info'>
-      <view class='title'><text >{{name}}\n</text></view>
-      <view class='article'><text>{{info}}\n</text>
-      <text style='font-weight:bold;'>百科链接: </text>
-      <text class='site'>{{website}}</text></view>
+      <view class='title'>
+        <text>{{name}}\n</text>
+      </view>
+      <view class='article'>
+        <text>{{name}} (学名：{{ename}})</text>
+        <text>{{info}}\n</text>
+        <text style='font-weight:bold;'>稀有动物: </text>
+        <text class='site'>{{dangerous}}</text>
+      </view>
     </view>
   </view>
 
-    <!-- 查看历史记录 -->
+  <!-- 查看历史记录 -->
   <view id='historybtn'>
     <text bindtap='historyFn'>{{history}}</text>
   </view>

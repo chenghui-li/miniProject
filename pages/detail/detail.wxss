@@ -27,8 +27,13 @@ height:80vh;
 }
 
 .animal{
-  height: 10vh;
-  width:10vw;
+ height:25vw;
+ width:27vw;
+ margin-left:36.5vw;
+ margin-top:6vw;
+ position:relative;
+ float:left;
+ z-index:10;
 }
 .article text{
   line-height: 10vw;

@@ -223,32 +223,64 @@ Page({
     console.log(getURL);
   },
 
-  /*将得到的视频URL传给后台，调用云函数 */
+  /*将得到的视频URL传给后台 */
   transfer(url) {
-    console.log(new Date().toLocaleString());
-    console.log(url);
+    // console.log(new Date().toLocaleString());
+    // console.log(url);
 
     // wx.request({
     //   url: '',
     //   method: 'POST'
     // });
-    const transferURL = wx.cloud.callFunction({
-      name: 'getBirdInfo',
-      data: {
-        key: url,
-        /*time:new Date().toLocaleString()*/
-      }
-    }).then(res => {
-      console.log('云函数获取成功result=', res)
-      // 隐藏状态框
-      wx.hideLoading();
-      //页面跳转
-      wx.navigateTo({
-        url: '../detail/detail?result=' + res
-      });
-    }).catch(error => {
-      // handle error
-    });
+    // const transferURL = wx.cloud.callFunction({
+    //   name: 'getBirdInfo',
+    //   data: {
+    //     key: url,
+    //     /*time:new Date().toLocaleString()*/
+    //   }
+    // }).then(res => {
+    //   console.log('云函数获取成功result=', res)
+    //   // 隐藏状态框
+    //   wx.hideLoading();
+    //   //页面跳转
+    //   wx.navigateTo({
+    //     url: '../detail/detail?result=' + res
+    //   });
+    // }).catch(error => {
+    //   // handle error
+    // });
+    const requestTask = wx.request({
+       method: 'POST',
+       url : 'https://api.docschina.org/api/mini/video' ,
+       data : {
+         "key" : url
+       } ,
+       header:{
+         'content-type':'application/json'
+       },
+       success:function(res){
+         console.log('云函数获取成功result=', res.data.data.name);
+         let id = res.data.data.name;
+         const find = wx.cloud.callFunction({
+            name: 'getBirdInfo',
+            data: {
+              key : id,
+              time:new Date().toLocaleString()
+            }
+          }).then(res => {
+            console.log('云函数获取成功result=', res.result)
+            // 隐藏状态框
+            wx.hideLoading();
+            //页面跳转
+            wx.navigateTo({
+              url: '../detail/detail?Ename=' + res.result.Ename + '&distribution=' + res.result.distribution + '&img=' + res.result.img + '&dangerous=' + res.result.dangerous + '&name=' + res.result.name + '&rare=' + res.result.rare
+               
+            });
+          }).catch(error => {
+            // handle error
+          });
+       }
+    })
   },
 
   /*跳转到历史记录页面 */
